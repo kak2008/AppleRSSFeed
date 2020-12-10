@@ -74,7 +74,8 @@ extension AlbumsViewController: UITableViewDataSource {
 
 extension AlbumsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected index: \(indexPath.row)")
+        let detailViewController = AlbumDetailViewController()
+        self.navigationController?.pushViewController(detailViewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -170,6 +171,17 @@ class AlbumTableViewCell: UITableViewCell {
     func configure() {
         artistLabel.text = "Hello"
         nameLabel.text = "Name"
+    }
+    
+}
+
+class AlbumDetailViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        title = "Album Title"
+        view.backgroundColor = UIColor.white
     }
     
 }
