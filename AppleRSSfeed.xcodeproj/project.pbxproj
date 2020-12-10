@@ -9,11 +9,12 @@
 /* Begin PBXBuildFile section */
 		F85F3C832581901700477D04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85F3C822581901700477D04 /* AppDelegate.swift */; };
 		F85F3C852581901700477D04 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85F3C842581901700477D04 /* SceneDelegate.swift */; };
-		F85F3C872581901700477D04 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85F3C862581901700477D04 /* ViewController.swift */; };
 		F85F3C8C2581901B00477D04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F85F3C8B2581901B00477D04 /* Assets.xcassets */; };
 		F85F3C8F2581901B00477D04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F85F3C8D2581901B00477D04 /* LaunchScreen.storyboard */; };
 		F85F3C9A2581901B00477D04 /* AppleRSSfeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85F3C992581901B00477D04 /* AppleRSSfeedTests.swift */; };
 		F85F3CA52581901B00477D04 /* AppleRSSfeedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85F3CA42581901B00477D04 /* AppleRSSfeedUITests.swift */; };
+		F85F3CB3258217D300477D04 /* AlbumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85F3CB2258217D300477D04 /* AlbumsViewController.swift */; };
+		F85F3CB6258219BC00477D04 /* AlbumsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85F3CB5258219BC00477D04 /* AlbumsViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +38,6 @@
 		F85F3C7F2581901700477D04 /* AppleRSSfeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleRSSfeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F85F3C822581901700477D04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F85F3C842581901700477D04 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F85F3C862581901700477D04 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F85F3C8B2581901B00477D04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F85F3C8E2581901B00477D04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F85F3C902581901B00477D04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,6 +47,8 @@
 		F85F3CA02581901B00477D04 /* AppleRSSfeedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppleRSSfeedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F85F3CA42581901B00477D04 /* AppleRSSfeedUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleRSSfeedUITests.swift; sourceTree = "<group>"; };
 		F85F3CA62581901B00477D04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F85F3CB2258217D300477D04 /* AlbumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewController.swift; sourceTree = "<group>"; };
+		F85F3CB5258219BC00477D04 /* AlbumsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,9 +99,9 @@
 		F85F3C812581901700477D04 /* AppleRSSfeed */ = {
 			isa = PBXGroup;
 			children = (
+				F85F3CB4258217D900477D04 /* View Controllers */,
 				F85F3C822581901700477D04 /* AppDelegate.swift */,
 				F85F3C842581901700477D04 /* SceneDelegate.swift */,
-				F85F3C862581901700477D04 /* ViewController.swift */,
 				F85F3C8B2581901B00477D04 /* Assets.xcassets */,
 				F85F3C8D2581901B00477D04 /* LaunchScreen.storyboard */,
 				F85F3C902581901B00477D04 /* Info.plist */,
@@ -112,6 +114,7 @@
 			children = (
 				F85F3C992581901B00477D04 /* AppleRSSfeedTests.swift */,
 				F85F3C9B2581901B00477D04 /* Info.plist */,
+				F85F3CB5258219BC00477D04 /* AlbumsViewModelTests.swift */,
 			);
 			path = AppleRSSfeedTests;
 			sourceTree = "<group>";
@@ -123,6 +126,14 @@
 				F85F3CA62581901B00477D04 /* Info.plist */,
 			);
 			path = AppleRSSfeedUITests;
+			sourceTree = "<group>";
+		};
+		F85F3CB4258217D900477D04 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F85F3CB2258217D300477D04 /* AlbumsViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,7 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F85F3C872581901700477D04 /* ViewController.swift in Sources */,
+				F85F3CB3258217D300477D04 /* AlbumsViewController.swift in Sources */,
 				F85F3C832581901700477D04 /* AppDelegate.swift in Sources */,
 				F85F3C852581901700477D04 /* SceneDelegate.swift in Sources */,
 			);
@@ -265,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F85F3CB6258219BC00477D04 /* AlbumsViewModelTests.swift in Sources */,
 				F85F3C9A2581901B00477D04 /* AppleRSSfeedTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
