@@ -99,6 +99,7 @@
 		F85F3C812581901700477D04 /* AppleRSSfeed */ = {
 			isa = PBXGroup;
 			children = (
+				F85F3CB725821B5300477D04 /* View Models */,
 				F85F3CB4258217D900477D04 /* View Controllers */,
 				F85F3C822581901700477D04 /* AppDelegate.swift */,
 				F85F3C842581901700477D04 /* SceneDelegate.swift */,
@@ -134,6 +135,13 @@
 				F85F3CB2258217D300477D04 /* AlbumsViewController.swift */,
 			);
 			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F85F3CB725821B5300477D04 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
