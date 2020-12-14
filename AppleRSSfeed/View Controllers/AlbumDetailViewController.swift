@@ -95,7 +95,7 @@ class AlbumDetailViewController: UIViewController {
     
     private let itunesButton: UIButton = {
         let button = UIButton()
-        button.setTitle("itunes", for: UIControl.State.normal)
+        button.setTitle("iTunes", for: UIControl.State.normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.adjustsFontForContentSizeCategory = true
         button.titleLabel?.font = .preferredFont(forTextStyle: UIFont.TextStyle.body, compatibleWith: UIScreen.main.traitCollection)
@@ -115,6 +115,8 @@ class AlbumDetailViewController: UIViewController {
         configureUI()
         setupConstraints()
     }
+    
+    // MARK:- Helper Methods
     
     func setupViews() {
         guard let viewModel = viewModel else { return }
@@ -144,15 +146,6 @@ class AlbumDetailViewController: UIViewController {
         
         if let url = viewModel.albumUrl {
             albumImageView.load(url: url)
-        }
-    }
-    
-    @objc
-    func didTapItunesButton() {
-        if let viewModel = viewModel, let url = viewModel.albumWebsiteUrl {
-            let albumBrowserViewController = SFSafariViewController(url: url)
-            albumBrowserViewController.title = viewModel.websiteViewControllerTitle
-            self.navigationController?.pushViewController(albumBrowserViewController, animated: true)
         }
     }
     
@@ -201,5 +194,14 @@ class AlbumDetailViewController: UIViewController {
             itunesButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -constant20),
             itunesButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -constant20)
         ])
+    }
+    
+    @objc
+    func didTapItunesButton() {
+        if let viewModel = viewModel, let url = viewModel.albumWebsiteUrl {
+            let albumBrowserViewController = SFSafariViewController(url: url)
+            albumBrowserViewController.title = viewModel.websiteViewControllerTitle
+            self.navigationController?.pushViewController(albumBrowserViewController, animated: true)
+        }
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-class AlbumsViewController: UIViewController {
+class AlbumsViewController: UIViewController, AlbumsDataDelegate {
     let tableView = UITableView()
     var viewModel: AlbumsViewModel?
     
@@ -19,8 +19,7 @@ class AlbumsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = AlbumsViewModel()
-        viewModel?.delegate = self
+        viewModel = AlbumsViewModel(delegate: self)
         
         setupView()
         setupTableView()
@@ -52,6 +51,10 @@ class AlbumsViewController: UIViewController {
         ])
     }
     
+    func albumsDataRetrieved() {
+        tableView.reloadData()
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
@@ -61,7 +64,7 @@ class AlbumsViewController: UIViewController {
 
 extension AlbumsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel?.albums?.count ?? 0
+        viewModel?.numberOfRows ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -96,96 +99,3 @@ extension AlbumsViewController: UITableViewDelegate {
         120
     }
 }
-
-extension AlbumsViewController: AlbumsDataDelegate {
-    func albumsDataRetrieved() {
-        tableView.reloadData()
-    }
-}
-
-protocol AlbumsDataDelegate {
-    func albumsDataRetrieved()
-}
-
-class AlbumsViewModel {
-    var viewTitle = "Albums"
-    var delegate: AlbumsDataDelegate?
-    var albums: [Album]?
-
-    func getAlbumsData() {
-        NetworkCommunicator.shared.getAlbumsData { (albums, error) in
-            guard error == nil else { return }
-            self.albums = albums
-            self.delegate?.albumsDataRetrieved()
-        }
-    }
-    
-    func cellViewModel(for indexpath: IndexPath) -> AlbumTableViewCellViewModel? {
-        guard let album = albums?[indexpath.row] else { return nil }
-        let albumInformation = AlbumCellInformation(name: album.name,
-                                                    artist: album.artistName,
-                                                    albumImage: album.artworkUrl100)
-        let albumViewModel = AlbumTableViewCellViewModel(albumInformation)
-        return albumViewModel
-    }
-}
-
-class NetworkCommunicator {
-    static let shared = NetworkCommunicator()
-    
-    func getAlbumsData(completion: @escaping (_ albums: [Album]?, _ error: Error?) ->  Void) {
-        guard let url = URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/50/explicit.json") else { return }
-        
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard error == nil else {
-                return
-            }
-            
-            let decoder = JSONDecoder()
-            guard let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 else { return }
-            
-            do {
-                let album = try decoder.decode(AlbumsData.self, from: data)
-                DispatchQueue.main.async {
-                    completion(album.feed.results, nil)
-                }
-            } catch {
-                print(error)
-            }
-        }
-        task.resume()
-    }
-}
-
-struct AlbumsData: Codable {
-    var feed: Feed
-}
-
-struct Feed: Codable {
-    var title: String
-    var id: String
-    var country: String
-    var results: [Album]
-}
-
-struct Album: Codable {
-    var artistName: String
-    var id: String
-    var releaseDate: String
-    var name: String
-    var kind: String
-    var copyright: String
-    var artistId: String
-    var artistUrl: String
-    var artworkUrl100: String
-    var url: String
-    var genres: [Genre]
-}
-
-struct Genre: Codable {
-    var genreId: String
-    var name: String
-    var url: String
-}
-
-

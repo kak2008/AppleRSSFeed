@@ -23,6 +23,9 @@
 		F8CFE395258780940001FEE1 /* AlbumCellInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CFE394258780940001FEE1 /* AlbumCellInformation.swift */; };
 		F8CFE397258788870001FEE1 /* AlbumTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CFE396258788870001FEE1 /* AlbumTableViewCellViewModel.swift */; };
 		F8CFE39925878A4D0001FEE1 /* AlbumTableViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CFE39825878A4D0001FEE1 /* AlbumTableViewCellViewModelTests.swift */; };
+		F8CFE39B25878E590001FEE1 /* AlbumsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CFE39A25878E590001FEE1 /* AlbumsData.swift */; };
+		F8CFE3A025878EE40001FEE1 /* NetworkCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CFE39F25878EE40001FEE1 /* NetworkCommunicator.swift */; };
+		F8CFE3A22587901D0001FEE1 /* AlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CFE3A12587901D0001FEE1 /* AlbumsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +68,9 @@
 		F8CFE394258780940001FEE1 /* AlbumCellInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCellInformation.swift; sourceTree = "<group>"; };
 		F8CFE396258788870001FEE1 /* AlbumTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		F8CFE39825878A4D0001FEE1 /* AlbumTableViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCellViewModelTests.swift; sourceTree = "<group>"; };
+		F8CFE39A25878E590001FEE1 /* AlbumsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsData.swift; sourceTree = "<group>"; };
+		F8CFE39F25878EE40001FEE1 /* NetworkCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCommunicator.swift; sourceTree = "<group>"; };
+		F8CFE3A12587901D0001FEE1 /* AlbumsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +121,7 @@
 		F85F3C812581901700477D04 /* AppleRSSfeed */ = {
 			isa = PBXGroup;
 			children = (
+				F8CFE39C25878EA90001FEE1 /* Networking */,
 				F8CFE3932587807C0001FEE1 /* Models */,
 				F8CFE39025877ED30001FEE1 /* Utilities */,
 				F8CFE385258399010001FEE1 /* Table view cells */,
@@ -164,6 +171,7 @@
 			children = (
 				F8CFE38A258775CC0001FEE1 /* AlbumDetailViewModel.swift */,
 				F8CFE396258788870001FEE1 /* AlbumTableViewCellViewModel.swift */,
+				F8CFE3A12587901D0001FEE1 /* AlbumsViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -188,8 +196,17 @@
 			isa = PBXGroup;
 			children = (
 				F8CFE394258780940001FEE1 /* AlbumCellInformation.swift */,
+				F8CFE39A25878E590001FEE1 /* AlbumsData.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		F8CFE39C25878EA90001FEE1 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				F8CFE39F25878EE40001FEE1 /* NetworkCommunicator.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -329,8 +346,11 @@
 				F8CFE395258780940001FEE1 /* AlbumCellInformation.swift in Sources */,
 				F85F3C852581901700477D04 /* SceneDelegate.swift in Sources */,
 				F8CFE3872583992A0001FEE1 /* AlbumTableViewCell.swift in Sources */,
+				F8CFE39B25878E590001FEE1 /* AlbumsData.swift in Sources */,
+				F8CFE3A22587901D0001FEE1 /* AlbumsViewModel.swift in Sources */,
 				F8CFE397258788870001FEE1 /* AlbumTableViewCellViewModel.swift in Sources */,
 				F8CFE38B258775CC0001FEE1 /* AlbumDetailViewModel.swift in Sources */,
+				F8CFE3A025878EE40001FEE1 /* NetworkCommunicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
