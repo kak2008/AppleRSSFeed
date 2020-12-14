@@ -92,7 +92,7 @@ extension AlbumsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        260
+        120
     }
 }
 
@@ -181,6 +181,20 @@ struct Genre: Codable {
 
 class AlbumDetailViewController: UIViewController {
     
+    private var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+    
+    private var contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private var nameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -255,12 +269,15 @@ class AlbumDetailViewController: UIViewController {
         title = "Album Title"
         view.backgroundColor = UIColor.white
         
-        view.addSubview(nameLabel)
-        view.addSubview(artistLabel)
-        view.addSubview(genreLabel)
-        view.addSubview(releaseLabel)
-        view.addSubview(copyRightLabel)
-        view.addSubview(albumImageView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(artistLabel)
+        contentView.addSubview(genreLabel)
+        contentView.addSubview(releaseLabel)
+        contentView.addSubview(copyRightLabel)
+        contentView.addSubview(albumImageView)
         
         guard let album = album else { return }
         
@@ -291,29 +308,41 @@ class AlbumDetailViewController: UIViewController {
         let safeArea = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            albumImageView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
-            albumImageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
-            albumImageView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            albumImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            albumImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            albumImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
             nameLabel.topAnchor.constraint(equalTo: albumImageView.bottomAnchor, constant: 20),
-            nameLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
-            nameLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
             artistLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20),
-            artistLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
-            artistLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            artistLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            artistLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
             genreLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: 20),
-            genreLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
-            genreLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            genreLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            genreLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
             releaseLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 20),
-            releaseLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
-            releaseLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            releaseLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            releaseLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
             copyRightLabel.topAnchor.constraint(equalTo: releaseLabel.bottomAnchor, constant: 20),
-            copyRightLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
-            copyRightLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20)
+            copyRightLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            copyRightLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            copyRightLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
 }

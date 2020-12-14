@@ -53,12 +53,12 @@ class AlbumTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        accessoryType = .disclosureIndicator
         addSubview(imageViewContainer)
         addSubview(nameLabel)
         addSubview(artistLabel)
         
         imageViewContainer.addSubview(albumImageView)
-        self.accessoryType = .disclosureIndicator
         
         NSLayoutConstraint.activate([
             imageViewContainer.topAnchor.constraint(equalTo: self.topAnchor),
