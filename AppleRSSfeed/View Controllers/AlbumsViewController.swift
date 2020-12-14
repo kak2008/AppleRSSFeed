@@ -83,6 +83,7 @@ extension AlbumsViewController: UITableViewDataSource {
 extension AlbumsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailViewController = AlbumDetailViewController()
+        detailViewController.album = viewModel?.albums?[indexPath.row]
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
     
@@ -180,12 +181,109 @@ struct Genre: Codable {
 
 class AlbumDetailViewController: UIViewController {
     
+    private var nameLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.adjustsFontForContentSizeCategory = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.lineBreakMode = .byWordWrapping
+        label.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline, compatibleWith: UIScreen.main.traitCollection)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private var artistLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.adjustsFontForContentSizeCategory = true
+        label.lineBreakMode = .byWordWrapping
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .preferredFont(forTextStyle: UIFont.TextStyle.subheadline, compatibleWith: UIScreen.main.traitCollection)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private var genreLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.adjustsFontForContentSizeCategory = true
+        label.lineBreakMode = .byWordWrapping
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .preferredFont(forTextStyle: UIFont.TextStyle.body, compatibleWith: UIScreen.main.traitCollection)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private var albumImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
+        
+        return imageView
+    }()
+    
+    var album: Albums?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Album Title"
         view.backgroundColor = UIColor.white
+        
+        self.view.addSubview(nameLabel)
+        self.view.addSubview(artistLabel)
+        self.view.addSubview(genreLabel)
+        self.view.addSubview(albumImageView)
+        
+        guard let album = album else { return }
+        
+        nameLabel.text = album.name
+        artistLabel.text = album.artistName
+        genreLabel.text = genreLabel(album.genres)
+        
+        if let url = URL(string: album.artworkUrl100) {
+            albumImageView.load(url: url)
+        }
+        
+        setupConstraints()
     }
+    
+    func genreLabel(_ genres: [Genre]) -> String {
+        var genreLabel = ""
+        
+        genres.forEach { (genre) in
+            let divider = genreLabel.count > 0 ? " | " : ""
+            genreLabel = genreLabel + divider + genre.name
+        }
+        return genreLabel
+    }
+    
+    func setupConstraints() {
+        let safeArea = view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            albumImageView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
+            albumImageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
+            albumImageView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            
+            nameLabel.topAnchor.constraint(equalTo: albumImageView.bottomAnchor, constant: 20),
+            nameLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
+            nameLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            
+            artistLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20),
+            artistLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
+            artistLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            
+            genreLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: 20),
+            genreLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
+            genreLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+        ])
+    }
+    
+    
     
 }
 
