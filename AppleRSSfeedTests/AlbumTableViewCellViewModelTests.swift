@@ -17,7 +17,6 @@ class AlbumTableViewCellViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        
         viewModel = AlbumTableViewCellViewModel(mockAlbumInfo)
     }
     
