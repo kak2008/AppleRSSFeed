@@ -11,7 +11,7 @@ import UIKit
 class AlbumTableViewCell: UITableViewCell {
     static let identifier = "albumTableViewCell"
     
-    var viewModel: AlbumCellInformation?
+    var viewModel: AlbumTableViewCellViewModel?
     
     private var albumImageView: UIImageView = {
         let imageView = UIImageView()
@@ -53,13 +53,24 @@ class AlbumTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        setupViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupViews() {
         accessoryType = .disclosureIndicator
         addSubview(imageViewContainer)
         addSubview(nameLabel)
         addSubview(artistLabel)
         
         imageViewContainer.addSubview(albumImageView)
-        
+    }
+    
+    func setupConstraints() {
         NSLayoutConstraint.activate([
             imageViewContainer.topAnchor.constraint(equalTo: self.topAnchor),
             imageViewContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -84,31 +95,13 @@ class AlbumTableViewCell: UITableViewCell {
         ])
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     func configure() {
         guard let viewModel = viewModel else { return }
         
         artistLabel.text = viewModel.artist
         nameLabel.text = viewModel.name
-        if let albumImage = viewModel.albumImage, let url = URL(string: albumImage) {
-            albumImageView.load(url: url)
+        if let albumImageURL = viewModel.albumImageUrl {
+            albumImageView.load(url: albumImageURL)
         }
-    }
-}
-
-struct AlbumCellInformation {
-    var name: String
-    var artist: String
-    var albumImage: String?
-}
-
-class AlbumTableViewCellViewModel {
-    var albumInformation: AlbumCellInformation?
-    
-    init(albumInfo: AlbumCellInformation) {
-        albumInformation = albumInfo
     }
 }

@@ -69,13 +69,12 @@ extension AlbumsViewController: UITableViewDataSource {
         emptyCell.backgroundColor = .clear
         emptyCell.isUserInteractionEnabled = false
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AlbumTableViewCell.identifier) as? AlbumTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AlbumTableViewCell.identifier) as? AlbumTableViewCell,
+            let cellViewModel = viewModel?.cellViewModel(for: indexPath) else {
             return emptyCell
         }
-        let album = viewModel?.albums?[indexPath.row]
-        cell.viewModel = AlbumCellInformation(name: album?.name ?? "name",
-                                              artist: album?.artistName ?? "art name",
-                                              albumImage: album?.artworkUrl100 ?? nil)
+        
+        cell.viewModel = cellViewModel
         cell.configure()
         return cell
     }
@@ -119,6 +118,15 @@ class AlbumsViewModel {
             self.albums = albums
             self.delegate?.albumsDataRetrieved()
         }
+    }
+    
+    func cellViewModel(for indexpath: IndexPath) -> AlbumTableViewCellViewModel? {
+        guard let album = albums?[indexpath.row] else { return nil }
+        let albumInformation = AlbumCellInformation(name: album.name,
+                                                    artist: album.artistName,
+                                                    albumImage: album.artworkUrl100)
+        let albumViewModel = AlbumTableViewCellViewModel(albumInformation)
+        return albumViewModel
     }
 }
 
@@ -180,16 +188,4 @@ struct Genre: Codable {
     var url: String
 }
 
-extension UIImageView {
-    func load(url: URL) {
-        DispatchQueue.main.async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                    }
-                }
-            }
-        }
-    }
-}
+
