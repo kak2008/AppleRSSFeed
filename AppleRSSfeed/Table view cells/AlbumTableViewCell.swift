@@ -60,8 +60,6 @@ class AlbumTableViewCell: UITableViewCell {
         imageViewContainer.addSubview(albumImageView)
         self.accessoryType = .disclosureIndicator
         
-        albumImageView.backgroundColor = UIColor.red
-        
         NSLayoutConstraint.activate([
             imageViewContainer.topAnchor.constraint(equalTo: self.topAnchor),
             imageViewContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -70,18 +68,19 @@ class AlbumTableViewCell: UITableViewCell {
             albumImageView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: 10),
             albumImageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: 10),
             albumImageView.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -10),
-            albumImageView.bottomAnchor.constraint(greaterThanOrEqualTo: imageViewContainer.bottomAnchor, constant: -10),
+            albumImageView.bottomAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: -10),
             
             nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
             nameLabel.leadingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: 12),
-            nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             
             artistLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 12),
             artistLabel.leadingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: 12),
             artistLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
-            artistLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            artistLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             
             albumImageView.widthAnchor.constraint(equalToConstant: 80)
+            //albumImageView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -94,14 +93,16 @@ class AlbumTableViewCell: UITableViewCell {
         
         artistLabel.text = viewModel.artist
         nameLabel.text = viewModel.name
-        //albumImageView.image = UIImage.init viewModel.albumImage
+        if let albumImage = viewModel.albumImage, let url = URL(string: albumImage) {
+            albumImageView.load(url: url)
+        }
     }
 }
 
 struct AlbumCellInformation {
     var name: String
     var artist: String
-    var albumImage: String
+    var albumImage: String?
 }
 
 class AlbumTableViewCellViewModel {

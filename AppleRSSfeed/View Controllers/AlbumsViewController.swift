@@ -15,11 +15,15 @@ class AlbumsViewController: UIViewController {
     private let emptyCellIdentifier = "emptyCell"
         
     // MARK:- View Life Cycle Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = AlbumsViewModel()
+        viewModel?.delegate = self
+        
         setupView()
         setupTableView()
+        viewModel?.getAlbumsData()
     }
     
     // MARK:- Helper Methods
@@ -56,7 +60,7 @@ class AlbumsViewController: UIViewController {
 
 extension AlbumsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        40
+        viewModel?.albums?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -67,9 +71,10 @@ extension AlbumsViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AlbumTableViewCell.identifier) as? AlbumTableViewCell else {
             return emptyCell
         }
-        cell.viewModel = AlbumCellInformation(name: "Name of Album",
-                                              artist: "Name of Artist",
-                                              albumImage: "Album Image")
+        let album = viewModel?.albums?[indexPath.row]
+        cell.viewModel = AlbumCellInformation(name: album?.name ?? "name",
+                                              artist: album?.artistName ?? "art name",
+                                              albumImage: album?.artworkUrl100 ?? nil)
         cell.configure()
         return cell
     }
@@ -90,11 +95,88 @@ extension AlbumsViewController: UITableViewDelegate {
     }
 }
 
+extension AlbumsViewController: AlbumsDataDelegate {
+    func albumsDataRetrieved() {
+        tableView.reloadData()
+    }
+}
+
+protocol AlbumsDataDelegate {
+    func albumsDataRetrieved()
+}
+
 class AlbumsViewModel {
     var viewTitle = "Albums"
-    
-    
+    var delegate: AlbumsDataDelegate?
+    var albums: [Albums]?
+
+    func getAlbumsData() {
+        NetworkCommunicator.shared.getAlbumsData { (albums, error) in
+            guard error == nil else { return }
+            self.albums = albums
+            self.delegate?.albumsDataRetrieved()
+        }
+    }
 }
+
+class NetworkCommunicator {
+    static let shared = NetworkCommunicator()
+    
+    func getAlbumsData(completion: @escaping (_ albums: [Albums]?, _ error: Error?) ->  Void) {
+        guard let url = URL(string: "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/50/explicit.json") else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard error == nil else {
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            guard let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 else { return }
+            
+            do {
+                let album = try decoder.decode(AlbumsData.self, from: data)
+                DispatchQueue.main.async {
+                    completion(album.feed.results, nil)
+                }
+            } catch {
+                print(error)
+            }
+        }
+        task.resume()
+    }
+}
+
+struct AlbumsData: Codable {
+    var feed: Feed
+}
+
+struct Feed: Codable {
+    var title: String
+    var id: String
+    var country: String
+    var results: [Albums]
+}
+
+struct Albums: Codable {
+    var artistName: String
+    var id: String
+    var releaseDate: String
+    var name: String
+    var kind: String
+    var copyright: String
+    var artistId: String
+    var artistUrl: String
+    var artworkUrl100: String
+    var url: String
+    var genres: [Genre]
+}
+
+struct Genre: Codable {
+    var genreId: String
+    var name: String
+    var url: String
+}
+
 
 class AlbumDetailViewController: UIViewController {
     
@@ -105,4 +187,18 @@ class AlbumDetailViewController: UIViewController {
         view.backgroundColor = UIColor.white
     }
     
+}
+
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.main.async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
 }
