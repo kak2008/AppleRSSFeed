@@ -332,6 +332,7 @@ class AlbumDetailViewController: UIViewController {
     
     func setupConstraints() {
         let safeArea = view.safeAreaLayoutGuide
+        let constant20 = CGFloat(20)
         
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
@@ -345,34 +346,34 @@ class AlbumDetailViewController: UIViewController {
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
-            albumImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            albumImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            albumImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            albumImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: constant20),
+            albumImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: constant20),
+            albumImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -constant20),
             
-            nameLabel.topAnchor.constraint(equalTo: albumImageView.bottomAnchor, constant: 20),
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            nameLabel.topAnchor.constraint(equalTo: albumImageView.bottomAnchor, constant: constant20),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: constant20),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -constant20),
             
-            artistLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20),
-            artistLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            artistLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            artistLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: constant20),
+            artistLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: constant20),
+            artistLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -constant20),
             
-            genreLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: 20),
-            genreLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            genreLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            genreLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: constant20),
+            genreLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: constant20),
+            genreLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -constant20),
             
-            releaseLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 20),
-            releaseLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            releaseLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            releaseLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: constant20),
+            releaseLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: constant20),
+            releaseLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -constant20),
             
-            copyRightLabel.topAnchor.constraint(equalTo: releaseLabel.bottomAnchor, constant: 20),
-            copyRightLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            copyRightLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            copyRightLabel.topAnchor.constraint(equalTo: releaseLabel.bottomAnchor, constant: constant20),
+            copyRightLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: constant20),
+            copyRightLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -constant20),
             
-            itunesButton.topAnchor.constraint(greaterThanOrEqualTo: copyRightLabel.bottomAnchor, constant: 20),
-            itunesButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            itunesButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            itunesButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            itunesButton.topAnchor.constraint(greaterThanOrEqualTo: copyRightLabel.bottomAnchor, constant: constant20),
+            itunesButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: constant20),
+            itunesButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -constant20),
+            itunesButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -constant20)
         ])
     }
 }
