@@ -214,6 +214,28 @@ class AlbumDetailViewController: UIViewController {
         return label
     }()
     
+    private var releaseLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.adjustsFontForContentSizeCategory = true
+        label.lineBreakMode = .byWordWrapping
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .preferredFont(forTextStyle: UIFont.TextStyle.footnote, compatibleWith: UIScreen.main.traitCollection)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private var copyRightLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.adjustsFontForContentSizeCategory = true
+        label.lineBreakMode = .byWordWrapping
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .preferredFont(forTextStyle: UIFont.TextStyle.footnote, compatibleWith: UIScreen.main.traitCollection)
+        label.textAlignment = .center
+        return label
+    }()
+    
     private var albumImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -233,16 +255,20 @@ class AlbumDetailViewController: UIViewController {
         title = "Album Title"
         view.backgroundColor = UIColor.white
         
-        self.view.addSubview(nameLabel)
-        self.view.addSubview(artistLabel)
-        self.view.addSubview(genreLabel)
-        self.view.addSubview(albumImageView)
+        view.addSubview(nameLabel)
+        view.addSubview(artistLabel)
+        view.addSubview(genreLabel)
+        view.addSubview(releaseLabel)
+        view.addSubview(copyRightLabel)
+        view.addSubview(albumImageView)
         
         guard let album = album else { return }
         
         nameLabel.text = album.name
         artistLabel.text = album.artistName
         genreLabel.text = genreLabel(album.genres)
+        releaseLabel.text = album.releaseDate
+        copyRightLabel.text = album.copyright
         
         if let url = URL(string: album.artworkUrl100) {
             albumImageView.load(url: url)
@@ -280,11 +306,16 @@ class AlbumDetailViewController: UIViewController {
             genreLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: 20),
             genreLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
             genreLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            
+            releaseLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 20),
+            releaseLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
+            releaseLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20),
+            
+            copyRightLabel.topAnchor.constraint(equalTo: releaseLabel.bottomAnchor, constant: 20),
+            copyRightLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
+            copyRightLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20)
         ])
     }
-    
-    
-    
 }
 
 extension UIImageView {
