@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class AlbumsViewController: UIViewController {
     let tableView = UITableView()
@@ -261,12 +262,27 @@ class AlbumDetailViewController: UIViewController {
         return imageView
     }()
     
+    private let itunesButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("itunes", for: UIControl.State.normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.adjustsFontForContentSizeCategory = true
+        button.titleLabel?.font = .preferredFont(forTextStyle: UIFont.TextStyle.body, compatibleWith: UIScreen.main.traitCollection)
+        button.addTarget(self, action: #selector(didTapItunesButton), for: .touchUpInside)
+        button.backgroundColor = UIColor.systemPurple
+        
+        button.layer.cornerRadius = 8
+        button.layer.masksToBounds = true
+        
+        return button
+    }()
+    
     var album: Albums?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Album Title"
+        title = "Album"
         view.backgroundColor = UIColor.white
         
         view.addSubview(scrollView)
@@ -277,6 +293,7 @@ class AlbumDetailViewController: UIViewController {
         contentView.addSubview(genreLabel)
         contentView.addSubview(releaseLabel)
         contentView.addSubview(copyRightLabel)
+        contentView.addSubview(itunesButton)
         contentView.addSubview(albumImageView)
         
         guard let album = album else { return }
@@ -302,6 +319,15 @@ class AlbumDetailViewController: UIViewController {
             genreLabel = genreLabel + divider + genre.name
         }
         return genreLabel
+    }
+    
+    @objc
+    func didTapItunesButton() {
+        if let albumUrl = album?.url, let url = URL(string: albumUrl) {
+            let albumBrowserViewController = SFSafariViewController(url: url)
+            albumBrowserViewController.title = "Apple Music"
+            self.navigationController?.pushViewController(albumBrowserViewController, animated: true)
+        }
     }
     
     func setupConstraints() {
@@ -342,7 +368,11 @@ class AlbumDetailViewController: UIViewController {
             copyRightLabel.topAnchor.constraint(equalTo: releaseLabel.bottomAnchor, constant: 20),
             copyRightLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             copyRightLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            copyRightLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            
+            itunesButton.topAnchor.constraint(greaterThanOrEqualTo: copyRightLabel.bottomAnchor, constant: 20),
+            itunesButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            itunesButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            itunesButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
 }
