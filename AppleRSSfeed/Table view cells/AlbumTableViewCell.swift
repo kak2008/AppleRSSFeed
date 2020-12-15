@@ -30,6 +30,12 @@ class AlbumTableViewCell: UITableViewCell {
         return view
     }()
     
+    private var labelsContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private var nameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -64,8 +70,10 @@ class AlbumTableViewCell: UITableViewCell {
     func setupViews() {
         accessoryType = .disclosureIndicator
         addSubview(imageViewContainer)
-        addSubview(nameLabel)
-        addSubview(artistLabel)
+        addSubview(labelsContainer)
+        
+        labelsContainer.addSubview(nameLabel)
+        labelsContainer.addSubview(artistLabel)
         
         imageViewContainer.addSubview(albumImageView)
     }
@@ -73,25 +81,30 @@ class AlbumTableViewCell: UITableViewCell {
     func setupConstraints() {
         NSLayoutConstraint.activate([
             imageViewContainer.topAnchor.constraint(equalTo: self.topAnchor),
-            imageViewContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            imageViewContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            imageViewContainer.trailingAnchor.constraint(equalTo: labelsContainer.leadingAnchor, constant: 20),
             imageViewContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            albumImageView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: 10),
-            albumImageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: 10),
-            albumImageView.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -10),
-            albumImageView.bottomAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: -10),
+            labelsContainer.topAnchor.constraint(equalTo: self.topAnchor),
+            labelsContainer.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            labelsContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
-            nameLabel.leadingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: 12),
-            nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            albumImageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor),
+            albumImageView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor),
+            
+            nameLabel.topAnchor.constraint(equalTo: labelsContainer.topAnchor, constant: 8),
+            nameLabel.leadingAnchor.constraint(equalTo: labelsContainer.leadingAnchor, constant: 12),
+            nameLabel.trailingAnchor.constraint(equalTo: labelsContainer.trailingAnchor, constant: -20),
             
             artistLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 12),
-            artistLabel.leadingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: 12),
-            artistLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
-            artistLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            artistLabel.leadingAnchor.constraint(equalTo: labelsContainer.leadingAnchor, constant: 12),
+            artistLabel.bottomAnchor.constraint(equalTo: labelsContainer.bottomAnchor, constant: -8),
+            artistLabel.trailingAnchor.constraint(equalTo: labelsContainer.trailingAnchor, constant: -20),
             
-            albumImageView.widthAnchor.constraint(equalToConstant: 80)
-            //albumImageView.heightAnchor.constraint(equalToConstant: 100)
+            albumImageView.widthAnchor.constraint(equalToConstant: 60),
+            albumImageView.heightAnchor.constraint(equalToConstant: 60),
+            
+            imageViewContainer.widthAnchor.constraint(equalToConstant: 80)
         ])
     }
     
